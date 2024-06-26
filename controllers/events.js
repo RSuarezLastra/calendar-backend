@@ -10,6 +10,8 @@ const getAllEvents = (req, res = response) => {
 }
 const createEvent = (req, res = response) => {
 
+    console.log(req.body);
+
     res.status(200).json({
         ok: true,
         msj: 'Evento creado'
