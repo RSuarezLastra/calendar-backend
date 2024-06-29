@@ -1,19 +1,23 @@
 const { response } = require('express');
-const Event  = require('../models/Event');
+const Event = require('../models/Event');
 
 
-const getAllEvents = async(req, res = response) => {
+const getAllEvents = async (req, res = response) => {
+
+    const events = await Event.find()
+        .populate('user', 'name')
 
     res.status(200).json({
         ok: true,
-        msj: 'Todos los eventos'
+        msj: 'Todos los eventos',
+        events
     });
 }
 const createEvent = async (req, res = response) => {
 
-    const {title, notes, start , end} = req.body;
+    const { title, notes, start, end } = req.body;
 
-    const event = new Event({title,notes,start,end});
+    const event = new Event({ title, notes, start, end });
 
     try {
 
@@ -30,9 +34,9 @@ const createEvent = async (req, res = response) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            ok:false,
+            ok: false,
             msj: 'Error al crear evento'
-        })        
+        })
     }
 }
 
