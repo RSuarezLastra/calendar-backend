@@ -40,13 +40,50 @@ const createEvent = async (req, res = response) => {
     }
 }
 
-const updateEvent = (req, res = response) => {
+const updateEvent = async (req, res = response) => {
 
-    res.status(200).json({
-        ok: true,
-        msj: 'Evento actualizado'
-    });
+    const eventId = req.params.id;
+
+    try {
+
+        const event = await Event.findById(eventId);
+
+        if (!event) {
+            return res.status(404).json({
+                ok: false,
+                msj: 'No existe un evento con ese id'
+            })
+        }
+
+        if (event.user.toString() !== req.uid) {
+            return res.status(401).json({
+                ok: false,
+                msj: 'No tiene privilegio de editar este evento'
+            })
+        }
+
+        const newEvent = {
+            ...req.body,
+            user: req.uid
+        }
+
+        const updatedEvent = await Event.findByIdAndUpdate(eventId, newEvent, { new: true });
+
+        res.status(200).json({
+            ok: true,
+            msj: 'Evento actualizado',
+            updatedEvent
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: true,
+            msj: 'Error al actualizar evento',
+        });
+    }
 }
+
 const deleteEvent = (req, res = response) => {
 
     res.status(200).json({
