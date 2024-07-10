@@ -14,7 +14,7 @@ const createUser = async (req, res = response) => {
         if (user) {
             return res.status(400).json({
                 ok: false,
-                msj: 'Ya existe un Usuario con este email'
+                msg: 'Ya existe un Usuario con este email'
             });
         }
 
@@ -31,7 +31,7 @@ const createUser = async (req, res = response) => {
 
         res.status(201).json({
             ok: true,
-            msj: 'Usuario registrado exitosamente',
+            msg: 'Usuario registrado exitosamente',
             uid: user.id,
             name,
             token
@@ -53,7 +53,7 @@ const loginUser = async (req, res = response) => {
         if (!user) {
             return res.status(400).json({
                 ok: false,
-                msj: 'No existe un usuario con este email'
+                msg: 'No existe un usuario con este email'
             });
         }
 
@@ -62,7 +62,7 @@ const loginUser = async (req, res = response) => {
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
-                msj: 'Contraseña incorrecta'
+                msg: 'Contraseña incorrecta'
             });
         }
 
@@ -95,7 +95,7 @@ const renewToken = async (req, res = response) => {
 
     res.json({
         ok: true,
-        msj: 'token renovado',
+        msg: 'token renovado',
         uid,
         name,
         token

@@ -9,7 +9,7 @@ const getAllEvents = async (req, res = response) => {
 
     res.status(200).json({
         ok: true,
-        msj: 'Todos los eventos',
+        msg: 'Todos los eventos',
         events
     });
 }
@@ -27,7 +27,7 @@ const createEvent = async (req, res = response) => {
 
         res.status(201).json({
             ok: true,
-            msj: 'Evento creado exitosamente',
+            msg: 'Evento creado exitosamente',
             event: savedEvent
         })
 
@@ -35,7 +35,7 @@ const createEvent = async (req, res = response) => {
         console.log(error);
         return res.status(500).json({
             ok: false,
-            msj: 'Error al crear evento'
+            msg: 'Error al crear evento'
         })
     }
 }
@@ -51,14 +51,14 @@ const updateEvent = async (req, res = response) => {
         if (!event) {
             return res.status(404).json({
                 ok: false,
-                msj: 'No existe un evento con ese id'
+                msg: 'No existe un evento con ese id'
             })
         }
 
         if (event.user.toString() !== req.uid) {
             return res.status(401).json({
                 ok: false,
-                msj: 'No tiene privilegio de editar este evento'
+                msg: 'No tiene privilegio de editar este evento'
             })
         }
 
@@ -71,7 +71,7 @@ const updateEvent = async (req, res = response) => {
 
         res.status(200).json({
             ok: true,
-            msj: 'Evento actualizado',
+            msg: 'Evento actualizado',
             updatedEvent
         });
 
@@ -79,7 +79,7 @@ const updateEvent = async (req, res = response) => {
         console.log(error);
         res.status(500).json({
             ok: true,
-            msj: 'Error al actualizar evento',
+            msg: 'Error al actualizar evento',
         });
     }
 }
@@ -95,14 +95,14 @@ const deleteEvent = async (req, res = response) => {
         if (!event) {
             return res.status(404).json({
                 ok: false,
-                msj: 'No existe un evento con ese id'
+                msg: 'No existe un evento con ese id'
             })
         }
 
         if (event.user.toString() !== req.uid) {
             return res.status(401).json({
                 ok: false,
-                msj: 'No tiene privilegio de eliminar este evento'
+                msg: 'No tiene privilegio de eliminar este evento'
             })
         }
 
@@ -110,14 +110,14 @@ const deleteEvent = async (req, res = response) => {
 
         res.status(200).json({
             ok: true,
-            msj: 'Evento eliminado'
+            msg: 'Evento eliminado'
         });
 
     } catch (error) {
         console.log(error);
         res.status(500).json({
             ok: true,
-            msj: 'Error al eliminar evento',
+            msg: 'Error al eliminar evento',
         });
     }
 }
